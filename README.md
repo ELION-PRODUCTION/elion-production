@@ -104,7 +104,7 @@ All changes should maintain the repository’s institutional standard:
 - avoid introducing framework or dependency sprawl without clear need
 - treat documentation as part of the product, not as an afterthought
 
-For contribution workflow details, see [CONTRIBUTING.md]([./CONTRIBUTING.md](https://github.com/ELION-PRODUCTION/elion-production/blob/main/elion-production/CONTRIBUTING.md)).
+For contribution workflow details, see [CONTRIBUTING.md](https://github.com/ELION-PRODUCTION/elion-production/blob/main/elion-production/CONTRIBUTING.md).
 
 ## Repository Governance
 
