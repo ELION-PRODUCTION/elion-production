@@ -7,6 +7,9 @@ on:
       - master
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   quality:
     runs-on: ubuntu-latest
@@ -15,13 +18,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Detect lockfile
+        id: lockfile
+        run: |
+          if [ -f package-lock.json ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node (cached)
         uses: actions/setup-node@v4
+        if: steps.lockfile.outputs.present == 'true'
         with:
           node-version: 20
           cache: npm
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        if: steps.lockfile.outputs.present != 'true'
+        with:
+          node-version: 20
+
       - name: Install dependencies
+        if: steps.lockfile.outputs.present == 'true'
+        run: npm ci
+
+      - name: Install dependencies (bootstrap)
+        if: steps.lockfile.outputs.present != 'true'
         run: npm install
 
       - name: Validate localization
